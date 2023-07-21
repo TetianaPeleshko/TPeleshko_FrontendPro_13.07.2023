@@ -1,31 +1,17 @@
-let calculate = prompt('What do you whant to do: add, sub, mult, div?');
-let firstNum = Number(prompt('Enter the first number:'));
-let secondNum = Number(prompt('Enter the second number:'));
+let numOrStr = prompt('Введіть число або рядок');
+console.log(numOrStr);
 
-let result;
-let oper;
-switch (calculate) {
-  case 'add':
-    result = firstNum + secondNum;
-    oper = '+';
+switch (true) {
+  case numOrStr === null:
+    console.log('Ви скасували');
     break;
-  case 'sub':
-    result = firstNum - secondNum;
-    oper = '-';
+  case numOrStr.trim() === '':
+    console.log('Порожній рядок');
     break;
-  case 'mult':
-    result = firstNum * secondNum;
-    oper = '*';
-    break;
-  case 'div':
-    result = firstNum / secondNum;
-    oper = '/';
+  case isNaN(+numOrStr):
+    console.log('Не число');
     break;
   default:
-      alert('Wrong input');
+    console.log('OK!');
+    break;
 }
-
-result = +result.toFixed(2)
-
-let outputResult = `${firstNum} ${oper} ${secondNum} = ${result}`;
-alert(outputResult);
