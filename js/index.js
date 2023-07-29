@@ -1,92 +1,63 @@
-//Вивести на сторінку в один рядок через кому числа від 10 до 20.
+// Вивести числа від 20 до 30 через пропуск, використовуючи крок 0,5 (20 20,5 21 21,5….).
 let strNum = [];
-for (let step = 10; step <= 20; step++) {
-  strNum.push(step);
-}
-alert(strNum);
 
-//Вивести квадрати чисел від 10 до 20.
-for (let step1 = 10; step1 <= 20; step1++) {
-  let square = step1 ** 2;
-  console.log(square);
+for (let i = 20; i <= 30; i += 0.5) {
+  strNum.push(i);
 }
+alert(strNum.join(' '));
 
-//Вивести таблицю множення на 7
-for (let i = 1; i <= 10; i++) {
-  let result = 7 * i;
-  console.log(`7 * ${i} = ${result}`);
+//Один долар коштує 27 гривень. Вивести дані з розрахунком вартості 10, 20, 30... 100 доларів.
+
+let exchangeRate = 27;
+
+for (let dollars = 10; dollars <= 100; dollars += 10) {
+  const uah = dollars * exchangeRate;
+  console.log(`${dollars} доларів = ${uah} гривень`);
 }
 
-//Знайти суму всіх цілих чисел від 1 до 15
-let sum1 = 0;
-for (let j = 1; j <= 15; j++) {
-  sum1 += j;
-}
-console.log(`Сума всіх цілих чисел від 1 до 15: ${sum1}`);
+//Дане ціле число. Вивести всі цілі числа від 1 до 100, квадрат яких не перевищує числа N.
+let entN = Number(prompt('Enter an integer:'));
 
-//Знайти добуток усіх цілих чисел від 15 до 35
-let sum2 = 1;
-for (let u = 15; u <= 35; u++) {
-  sum2 *= u;
-}
-console.log(`Добуток усіх цілих чисел від 15 до 35: ${sum2}`);
-
-//Знайти середнє арифметичне всіх цілих чисел від 1 до 500
-let sum3 = 0;
-let n = 500;
-for (let k = 1; k <= n; k++) {
-  sum3 += k;
-}
-let average = sum3 / n;
-console.log(`Середнє арифметичне всіх цілих чисел від 1 до 500: ${average}`);
-
-//Вивести суму лише парних чисел в діапазоні від 30 до 80 (Варіннт1)
-let sum4 = 0;
-for (let s = 30; s <= 80; s++) {
-  if (s % 2 === 0) {
-    sum4 += s;
-  }
-}
-console.log(`Сума парних чисел в діапазоні від 30 до 80: ${sum4}`);
-
-//Вивести суму лише парних чисел в діапазоні від 30 до 80 (Варіннт2)
-let sum5 = 0;
-for (let s = 30; s <= 80; s += 2) {
-  sum5 += s;
-}
-console.log(`Сума парних чисел в діапазоні від 30 до 80: ${sum5}`);
-
-//Вивести всі числа в діапазоні від 100 до 200 кратні 3
-for (let f = 100; f <= 200; f++) {
-  if (f % 3 === 0) {
-    console.log(`Числа в діапазоні від 100 до 200 кратні 3: ${f}`);
+for (let j = 1; j <= 100; j++) {
+  if (j * j <= entN) {
+    console.log(j);
+  } else {
+    break;
   }
 }
 
-// Дано натуральне число. Знайти та вивести на сторінку всі його дільники.
-let num = Number(prompt('Entera natural number:'));
-let allDiv = [];
-let counter = 0;
-let sum = 0;
-for (let p = 2; p < num; p++) {
-  if (num % p === 0) {
-    allDiv.push(p);
-    //Визначити кількість його парних дільників
-    if (p % 2 === 0) {
-      counter++;
-      //Знайти суму його парних дільників
-      sum += p;
+//Дане ціле число. З'ясувати, чи є воно простим (простим називається число, більше 1, які не мають інших дільників крім 1 і себе).
+let numInteger = Number(prompt('Enter an integer:'));
+let prime = true;
+if (numInteger <= 1) {
+  prime = false;
+} else {
+  for (let n = 2; n <= numInteger / 2; n++) {
+    if (numInteger % n === 0) {
+      prime = false;
     }
   }
 }
-alert(allDiv);
-alert(counter);
-alert(sum);
+if (prime) {
+  console.log(`${numInteger} is a prime number`);
+} else {
+  console.log(`${numInteger} is not a prime number`);
+}
 
-//Надрукувати повну таблицю множення від 1 до 10
-for (let j = 1; j <= 10; j++) {
-  for (let i = 1; i <= 10; i++) {
-    let result = j * i;
-    console.log(`${j} * ${i} = ${result}`);
-  }
+//Дане деяке число. Визначити, чи можна одержати це число шляхом зведення числа 3 у деякий ступінь. (Наприклад, числа 9, 81 можна отримати, а 13 - не можна).
+
+let someNum = Number(prompt('Enter a number:'));
+let power;
+
+for (let p = 0; 3 ** p <= someNum; p++) {
+  power = p;
+}
+if (3 ** power === someNum) {
+  console.log(
+    `${someNum} can be obtained by reducing the number 3 to a certain number`
+  );
+} else {
+  console.log(
+    `${someNum} can't be obtained by reducing the number 3 to a certain number`
+  );
 }
