@@ -1,63 +1,98 @@
-// Вивести числа від 20 до 30 через пропуск, використовуючи крок 0,5 (20 20,5 21 21,5….).
-let strNum = [];
+// Дан масив [16,-37,54,-4,72,-56,47,4, -16,25,-37,46,4,-51,27,-63,4,-54,76,-4,12,-35,4,47]
 
-for (let i = 20; i <= 30; i += 0.5) {
-  strNum.push(i);
+let numbers = [
+  16, -37, 54, -4, 72, -56, 47, 4, -16, 25, -37, 46, 4, -51, 27, -63, 4, -54,
+  76, -4, 12, -35, 4, 47,
+];
+// Знайти суму та кількість позитивних елементів
+
+let numPositNumbers = numbers.filter((item) => item > 0).length;
+// option_1
+let sumPositNumbers = numbers
+  .filter((item) => item > 0)
+  .reduce((acc, num) => acc + num, 0);
+
+console.log(numPositNumbers);
+console.log(sumPositNumbers);
+
+// option_2
+let sumPositNumbers2 = 0;
+for (let i of numbers) {
+  if (i > 0) {
+    sumPositNumbers2 += i;
+  }
 }
-alert(strNum.join(' '));
+console.log(sumPositNumbers2);
 
-//Один долар коштує 27 гривень. Вивести дані з розрахунком вартості 10, 20, 30... 100 доларів.
+// Знайти мінімальний елемент масиву та його порядковий номер
+let minValue = Math.min(...numbers);
+let seqNumber = numbers.indexOf(minValue);
+console.log(minValue);
+console.log(seqNumber);
 
-let exchangeRate = 27;
+// Знайти максимальний елемент масиву та його порядковий номер
 
-for (let dollars = 10; dollars <= 100; dollars += 10) {
-  const uah = dollars * exchangeRate;
-  console.log(`${dollars} доларів = ${uah} гривень`);
+let maxValue = numbers.reduce((max, cur) => {
+  return max > cur ? max : cur;
+});
+let seqNumberMax = numbers.indexOf(maxValue);
+console.log(maxValue);
+console.log(seqNumberMax);
+
+// Визначити кількість негативних елементів
+let numNegNumbers = numbers.filter((item) => item < 0).length;
+console.log(numNegNumbers);
+
+// Знайти кількість непарних позитивних елементів
+// Знайти суму непарних позитивних елементів
+
+let count1 = 0;
+let sumOdd = 0;
+for (let i = 0; i < numbers.length; i++) {
+  if (numbers[i] > 0 && numbers[i] % 2 !== 0) {
+    count1++;
+    sumOdd += numbers[i];
+  }
 }
+console.log(
+  `кількість непарних позитивних елементів ${count1}, сума непарних позитивних елементів ${sumOdd}`
+);
 
-//Дане ціле число. Вивести всі цілі числа від 1 до 100, квадрат яких не перевищує числа N.
-let entN = Number(prompt('Enter an integer:'));
+// Знайти кількість парних позитивних елементів
+// Знайти суму парних позитивних елементів
+let count2 = 0;
+let sum = 0;
+for (let i = 0; i < numbers.length; i++) {
+  if (numbers[i] > 0 && numbers[i] % 2 === 0) {
+    count2++;
+    sum += numbers[i];
+  }
+}
+console.log(
+  `кількість парних позитивних елементів ${count2}, сума парних позитивних елементів ${sum}`
+);
 
-for (let j = 1; j <= 100; j++) {
-  if (j * j <= entN) {
-    console.log(j);
-  } else {
-    break;
+// Знайти добуток позитивних елементів
+
+let product = 1;
+let posElement = numbers.map((num) => {
+  if (num > 0) {
+    product *= num;
+  }
+});
+console.log(`добуток позитивних елементів ${product}`);
+
+// Знайти найбільший серед елементів масиву, остальні обнулити.
+
+let maxValue2 = numbers.reduce((max, cur) => {
+  return max > cur ? max : cur;
+});
+
+for (let j = 0; j < numbers.length; j++) {
+  if (numbers[j] !== maxValue2) {
+    numbers[j] = 0;
   }
 }
 
-//Дане ціле число. З'ясувати, чи є воно простим (простим називається число, більше 1, які не мають інших дільників крім 1 і себе).
-let numInteger = Number(prompt('Enter an integer:'));
-let prime = true;
-if (numInteger <= 1) {
-  prime = false;
-} else {
-  for (let n = 2; n <= numInteger / 2; n++) {
-    if (numInteger % n === 0) {
-      prime = false;
-    }
-  }
-}
-if (prime) {
-  console.log(`${numInteger} is a prime number`);
-} else {
-  console.log(`${numInteger} is not a prime number`);
-}
-
-//Дане деяке число. Визначити, чи можна одержати це число шляхом зведення числа 3 у деякий ступінь. (Наприклад, числа 9, 81 можна отримати, а 13 - не можна).
-
-let someNum = Number(prompt('Enter a number:'));
-let power;
-
-for (let p = 0; 3 ** p <= someNum; p++) {
-  power = p;
-}
-if (3 ** power === someNum) {
-  console.log(
-    `${someNum} can be obtained by reducing the number 3 to a certain number`
-  );
-} else {
-  console.log(
-    `${someNum} can't be obtained by reducing the number 3 to a certain number`
-  );
-}
+console.log(maxValue2);
+console.log(numbers);
