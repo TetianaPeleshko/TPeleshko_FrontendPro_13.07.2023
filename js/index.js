@@ -1,23 +1,20 @@
-// створити піраміду фібоначі
+// Написати функцію, яка приймає 1 параметр. з тим, що передали перший раз і т. д. Все це із замиканнями, наприклад:
 
-function fibonachy(n) {
-  if (n === 0 || n === 1) {
-    return 1;
-  } else {
-    return fibonachy(n - 1) + fibonachy(n - 2);
-  }
+// sum(3) = 3
+
+// sum(5) = 8
+
+// sum(20) = 28
+
+function someFunc() {
+  let result = 0;
+  return function add(num) {
+    result += num;
+    return result;
+  };
 }
+const sum = someFunc();
 
-function triangle(n) {
-  for (let i = 1; i <= n; i++) {
-    let row = '';
-    for (let j = 1; j <= i; j++) {
-      row += fibonachy(j) + ' ';
-    }
-    console.log(row);
-  }
-}
-
-triangle(15);
-
-// В завдвнні написано "створити піраміду фібоначі", а на зображенні намальована піраміда паскаля. Я не зрозуміла, що саме треба порахувати, тож написала рекурсію на розрахунок фібоначі
+console.log(sum(3));
+console.log(sum(5));
+console.log(sum(20));
