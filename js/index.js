@@ -1,20 +1,34 @@
-// Написати функцію, яка приймає 1 параметр. з тим, що передали перший раз і т. д. Все це із замиканнями, наприклад:
+// let ladder = {
+//   step: 0,
+//   up: function () {
+//       this.step++;
+//   },
+//   down: function () {
+//       this.step--;
+//   },
+//   showStep: function () { // показывает текущую ступеньку
+//       alert(this.step);
+//   }
+// };
+// ladder.up();
+// ladder.up();
+// ladder.down();
+// ladder.showStep(); // 1
 
-// sum(3) = 3
+let ladder = {
+  step: 0,
+  up: function () {
+    this.step++;
+    return this;
+  },
+  down: function () {
+    this.step--;
+    return this;
+  },
+  showStep: function () {
+    alert(this.step);
+    return this;
+  },
+};
 
-// sum(5) = 8
-
-// sum(20) = 28
-
-function someFunc() {
-  let result = 0;
-  return function add(num) {
-    result += num;
-    return result;
-  };
-}
-const sum = someFunc();
-
-console.log(sum(3));
-console.log(sum(5));
-console.log(sum(20));
+ladder.up().up().down().showStep();
