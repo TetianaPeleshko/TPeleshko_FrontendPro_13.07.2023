@@ -5,6 +5,7 @@ let arr = [
   2,
   3,
   77,
+  '77',
   -5,
   'ff',
   'vfd',
@@ -22,7 +23,7 @@ function averageNum(arr) {
   let arrayOfNumbers = [];
 
   for (const item of arr) {
-    if (!isNaN(item)) {
+    if (typeof item === 'number') {
       arrayOfNumbers.push(item);
     }
   }
@@ -91,8 +92,10 @@ let newArray = fillArray(lengthArr, heightArr);
 console.log(newArray);
 
 // 4. Створити функцію, яка прибирає з рядка всі символи, які ми передали другим аргументом. 'func(" hello world", ['l', 'd'])' поверне нам "heo wor". Вихідний рядок та символи для видалення задає користувач.
+
+// Option1
 let hello = 'Hello world';
-let delChar = ['o', 'd'];
+let delChar = ['l', 'd'];
 
 function func(inpStr, delChar) {
   let addToArray = inpStr.split('');
@@ -103,3 +106,20 @@ function func(inpStr, delChar) {
 
 let newHello = func(hello, delChar);
 console.log(newHello);
+
+// Option2 (changed)
+
+let hello2 = 'Hello world';
+let delChar2 = ['l', 'd'];
+
+function remChars(inpStr2, delChar2) {
+  let resString = inpStr2;
+
+  for (let char2 of delChar2) {
+    resString = resString.split(char2).join('');
+  }
+  return resString;
+}
+
+let newHello2 = remChars(hello2, delChar2);
+console.log(newHello2);
