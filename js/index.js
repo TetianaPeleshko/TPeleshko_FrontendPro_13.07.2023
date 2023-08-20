@@ -1,61 +1,127 @@
-class Person {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
+class Student {
+  constructor(firstName, lastName, birthYear) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.birthYear = birthYear;
+    this.grades = [];
+    this.attendance = new Array(25).fill(null);
   }
-  showPersonInfo() {
-    console.log(`Ім'я: ${this.name}, Вік: ${this.age}`);
+
+  getAge() {
+    const currentAge = new Date().getFullYear();
+    return currentAge - this.birthYear;
+  }
+
+  getAverageGrade() {
+    if (this.grades.length === 0) {
+      return 0;
+    }
+
+    const sum = this.grades.reduce((total, grade) => total + grade, 0);
+    return sum / this.grades.length;
+  }
+
+  _upAttendance(isPresent) {
+    const index = this.attendance.findIndex((item) => item === null);
+    if (index !== -1) {
+      this.attendance[index] = isPresent;
+    }
+  }
+
+  present() {
+    this._upAttendance(true);
+  }
+
+  absent() {
+    this._upAttendance(false);
+  }
+
+  summary() {
+    const averageGrade = this.getAverageGrade();
+    const averageAttendance =
+      this.attendance.filter((item) => item === true).length /
+      this.attendance.length;
+
+    if (averageGrade > 90 && averageAttendance > 0.9) {
+      return 'Молодець!';
+    } else if (averageGrade > 90 || averageAttendance > 0.9) {
+      return 'Добре, але можна краще';
+    } else {
+      return 'Редиска!';
+    }
   }
 }
 
-const person1 = new Person('Маша', 15);
-const person2 = new Person('Міша', 25);
-const person3 = new Person('Даша', 48);
-const person4 = new Person('Саша', 17);
+let student_1 = new Student('Masha', 'Sydorova', 2000);
+let student_2 = new Student('Alex', 'Petrov', 2006);
+let student_3 = new Student('Den', 'Ivanov', 2004);
 
-// person1.showPersonInfo();
-// person2.showPersonInfo();
-// person3.showPersonInfo();
-// person4.showPersonInfo();
+student_1.present();
+student_1.present();
+student_1.absent();
 
-class Car {
-  constructor(brand, model, year, licensePlate) {
-    this.brand = brand;
-    this.model = model;
-    this.year = year;
-    this.licensePlate = licensePlate;
-    // this.owner = null; Не знаю чи потрібна ця строка, бо на код не впливає
-  }
-  setOwner(owner) {
-    if (owner.age >= 18) {
-      this.owner = owner;
-    } else {
-      console.log('Власник не може бути молодше 18 років');
-    }
-  }
-  showCarInfo() {
-    console.log(
-      `Марка ${this.brand}, Модель ${this.model}, Рік випуску ${this.year}, Номерний знак ${this.licensePlate}`
-    );
-    if (this.owner) {
-      console.log('Інформація про власника:');
-      this.owner.showPersonInfo();
-    } else {
-      console.log('Автомобіль не має власника');
-    }
-  }
-}
-const car1 = new Car('Toyota', 'Camry', 2022, 'AA1234BB');
-const car2 = new Car('Volkswagen', 'Passat', 2023, 'ВС4567АА');
-const car3 = new Car('Ford', 'Mustang', 2022, 'ЕЕ8901ВС');
-const car4 = new Car('BMW', 'X5', 2021, 'МН2345КЕ');
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
+student_2.present();
 
-car1.setOwner(person1);
-car2.setOwner(person2);
-car3.setOwner(person3);
-car4.setOwner(person4);
+student_3.absent();
+student_3.absent();
+student_3.present();
 
-car1.showCarInfo();
-car2.showCarInfo();
-car3.showCarInfo();
-car4.showCarInfo();
+student_1.grades = [45, 56, 89, 100, 99, 67];
+student_2.grades = [98, 89, 99, 100, 100];
+student_3.grades = [95, 88, 100, 100, 92];
+
+console.log(student_1.attendance);
+console.log(student_2.attendance);
+console.log(student_3.attendance);
+console.log(
+  `Вік студента ${student_1.firstName} ${
+    student_1.lastName
+  } ${student_1.getAge()}`
+);
+console.log(
+  `Середня оцінка ${student_2.firstName} ${
+    student_2.lastName
+  } ${student_2.getAverageGrade()}`
+);
+console.log(
+  `Вік студента ${student_3.firstName} ${
+    student_3.lastName
+  } ${student_3.getAge()}`
+);
+console.log(
+  `Середня оцінка ${student_3.firstName} ${
+    student_3.lastName
+  } ${student_3.getAverageGrade()}`
+);
+console.log(
+  `${student_1.firstName} ${student_1.lastName} ${student_1.summary()}`
+);
+console.log(
+  `${student_2.firstName} ${student_2.lastName} ${student_2.summary()}`
+);
+console.log(
+  `${student_3.firstName} ${student_3.lastName} ${student_3.summary()}`
+);
