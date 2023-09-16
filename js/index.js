@@ -1,85 +1,53 @@
 'use strict';
 
-const apiUrl = 'https://jsonplaceholder.typicode.com';
+// Функція для відображення погоди
+function displayWeather(data) {
+  const cityName = document.getElementById('city-name');
+  const temperature = document.getElementById('temperature');
+  const pressure = document.getElementById('pressure');
+  const description = document.getElementById('description');
+  const humidity = document.getElementById('humidity');
+  const windSpeed = document.getElementById('wind-speed');
+  const windDirection = document.getElementById('wind-direction');
+  const weatherIcon = document.getElementById('weather-icon');
 
-// Введення числа
-document.getElementById('serchButton').addEventListener('click', () => {
-  // Отримуємо значення ідентифікатора поста з поля введення
-  const postId = document.getElementById('postIdInput').value;
-  if (!postId || postId < 1 || postId > 100) {
-    alert('Введить ідентифікатор поста від 1 до 100');
-    return; // Припиняємо виконання функції
-  }
+  cityName.textContent = data.name;
+  temperature.textContent = data.main.temp;
+  pressure.textContent = data.main.pressure;
+  description.textContent = data.weather[0].description;
+  humidity.textContent = data.main.humidity;
+  windSpeed.textContent = data.wind.speed;
+  windDirection.textContent = data.wind.deg;
+  weatherIcon.src = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
+}
 
-  // const fetchPost = function(postId)
-  fetchPost(postId)
-    .then((post) => {
-      // Отримали пост, виводимо його дані у консоль
-      displayPost(post);
+// // функція для виведення погоди через fetch-запит
+function getWeatherWithFetch(city) {
+  fetch(
+    `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=5d066958a60d315387d9492393935c19`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      displayWeather(data);
     })
     .catch((error) => {
-      console.error('Помилка:', error);
+      console.error('Помилка отримання погоди:', error);
     });
-});
-
-// Отримання коментарів
-document.getElementById('getCommentsButton').addEventListener('click', () => {
-  const postId = document.getElementById('postIdInput').value;
-
-  // Викликаємо функцію fetchComments(postId) для отримання коментарів та відображення їх
-  // const fetchComments = function(postId)
-  fetchComments(postId)
-    .then((comments) => {
-      displayComments(comments);
-    })
-    .catch((error) => {
-      console.error('Помилка отримання коментарів:', error);
-    });
-});
-
-// Функція для виконання запиту за постом з використанням fetch
-function fetchPost(postId) {
-  return fetch(`${apiUrl}/posts/${postId}`).then((response) => {
-    if (!response.ok) {
-      throw new Error(`Помилка запиту: ${response.status}`);
-    }
-    return response.json(); // Повертаємо результат у форматі JSON
-  });
 }
 
-// Функція для виконання запиту за коментарями до поста з використанням fetch
-function fetchComments(postId) {
-  return fetch(`${apiUrl}/posts/${postId}/comments`).then((response) => {
-    if (!response.ok) {
-      throw new Error(`Помилка запиту: ${response.status}`);
-    }
-    return response.json();
-  });
-}
+// // функція для виведення погоди через async/await
+// async function getWeatherAsyncAwait(city) {
+//   try {
+//     const response = await fetch(
+//       `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=5d066958a60d315387d9492393935c19`
+//     );
+//     const data = await response.json();
+//     displayWeather(data);
+//   } catch (error) {
+//     console.error('Помилка отримання погоди:', error);
+//   }
+// }
 
-// Функція для відображення даних про пост на сторінці
-function displayPost(post) {
-  // Встановлюємо стиль елементу з id="postContainer" на видимий
-  document.getElementById('postContainer').style.display = 'block';
-  // Вставляємо дані про пост в елемент з id="post"
-  document.getElementById('post').innerHTML = `
-  <p><strong>ID:</strong> ${post.id}</p>
-  <p><strong>Title:</strong> ${post.title}</p>
-  <p><strong>Body:</strong> ${post.body}</p>
-`;
-}
-
-// Функція для відображення коментарів на сторінці
-function displayComments(comments) {
-  const commentsContainer = document.getElementById('comments');
-  commentsContainer.innerHTML = '<h2>Коментарі:</h2>';
-  // Додаємо коментарі до контейнера
-  comments.forEach((comment) => {
-    commentsContainer.innerHTML += `<div>
-      <p><strong>ID:</strong> ${comment.id}</p>
-      <p><strong>Name:</strong> ${comment.name}</p>
-      <p><strong>Email:</strong> ${comment.email}</p>
-      <p><strong>Body:</strong> ${comment.body}</p>
-  </div>`;
-  });
-}
+const city = 'LVIV';
+getWeatherWithFetch(city);
+getWeatherAsyncAwait(city);
