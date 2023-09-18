@@ -1,53 +1,22 @@
 'use strict';
 
-// Функція для відображення погоди
-function displayWeather(data) {
-  const cityName = document.getElementById('city-name');
-  const temperature = document.getElementById('temperature');
-  const pressure = document.getElementById('pressure');
-  const description = document.getElementById('description');
-  const humidity = document.getElementById('humidity');
-  const windSpeed = document.getElementById('wind-speed');
-  const windDirection = document.getElementById('wind-direction');
-  const weatherIcon = document.getElementById('weather-icon');
-
-  cityName.textContent = data.name;
-  temperature.textContent = data.main.temp;
-  pressure.textContent = data.main.pressure;
-  description.textContent = data.weather[0].description;
-  humidity.textContent = data.main.humidity;
-  windSpeed.textContent = data.wind.speed;
-  windDirection.textContent = data.wind.deg;
-  weatherIcon.src = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
+function generateList(array) {
+  let result = '<ul>';
+  for (let i = 0; i < array.length; i++) {
+    if (Array.isArray(array[i])) {
+      result += `<li>${generateList(array[i])}</li>`;
+    } else {
+      result += `<li>${array[i]}</li>`;
+    }
+  }
+  result += '</ul>';
+  return result;
 }
 
-// // функція для виведення погоди через fetch-запит
-function getWeatherWithFetch(city) {
-  fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=5d066958a60d315387d9492393935c19`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      displayWeather(data);
-    })
-    .catch((error) => {
-      console.error('Помилка отримання погоди:', error);
-    });
-}
+const inputArray1 = [1, 2, 3];
+const inputArray2 = [1, 2, [1.1, 1.2, 1.3], 3];
+const htmlList1 = generateList(inputArray1);
+const htmlList2 = generateList(inputArray2);
 
-// // функція для виведення погоди через async/await
-// async function getWeatherAsyncAwait(city) {
-//   try {
-//     const response = await fetch(
-//       `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=5d066958a60d315387d9492393935c19`
-//     );
-//     const data = await response.json();
-//     displayWeather(data);
-//   } catch (error) {
-//     console.error('Помилка отримання погоди:', error);
-//   }
-// }
-
-const city = 'LVIV';
-getWeatherWithFetch(city);
-getWeatherAsyncAwait(city);
+// Додавання списку до DOM:
+document.body.innerHTML = `${htmlList1}${htmlList2}`;
